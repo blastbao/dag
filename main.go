@@ -1,14 +1,19 @@
 package main
 
-import "log"
+import (
+	"fmt"
+)
 
 func main() {
 
 
 	_, root := NewDAG()
 
-	res := BFS(root)
-	log.Printf("res=%v", res)
+	layers := BFSNew(root)
+	for _, layer := range layers {
+		fmt.Println("------------------")
+		doTasksParallel(layer)
+	}
 
 }
 

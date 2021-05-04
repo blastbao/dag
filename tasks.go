@@ -56,30 +56,26 @@ func BFSNew(root *Vertex) [][]*Vertex {
 			}
 		}
 		all = append([][]*Vertex{tmp}, all...)
-
-		for _, layer := range all {
-			fmt.Println("------------------")
-			doTasks(layer)
-		}
 	}
 	return all
 }
 
-func doTasks(vertexs []*Vertex) {
+// 同层任务 —— 串行执行
+func doTasksSerially(vertexs []*Vertex) {
 	for _, v := range vertexs {
-		time.Sleep(5 * time.Second)
+		time.Sleep(1 * time.Second)
 		fmt.Printf("do %v, result is %v \n", v.Key, v.Value)
 	}
 }
 
-//并发执行
-func doTasksNew(vertexs []*Vertex) {
+// 同层任务 —— 并发执行
+func doTasksParallel(vertexs []*Vertex) {
 	var wg sync.WaitGroup
 	for _, v := range vertexs {
 		wg.Add(1)
 		go func(v *Vertex) {
 			defer wg.Done()
-			time.Sleep(5 * time.Second)
+			time.Sleep(1 * time.Second)
 			fmt.Printf("do %v, result is %v \n", v.Key, v.Value)
 		}(v) //notice
 	}
